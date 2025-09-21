@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>कलाकृति बाज़ार - Kalakriti Bazaar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Rozha+One&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #FFF8E1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D2B48C' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .font-display { font-family: 'Rozha One', serif; }
+    .font-body { font-family: 'Lora', serif; }
+    .card { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+    .card:hover { transform: translateY(-10px) scale(1.03); }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-enter { animation: fadeInUp 0.5s ease-out forwards; }
+    .chat-window, .cart-sidebar {
+        transition: opacity 0.3s, transform 0.3s;
+    }
+  </style>
+</head>
+<body class="font-body text-gray-800">
+
+  <nav class="bg-teal-900 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a href="#" class="flex items-center gap-3">
+            <img src="image.png" alt="Kalakriti Bazaar Logo" class="h-8 w-auto">
+            <span class="font-display text-2xl text-amber-100">Kalakriti Bazaar</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-6">
+            <a href="#" class="text-amber-200 hover:text-white transition">Home</a>
+            <a href="#products" class="text-amber-200 hover:text-white transition">New Arrivals</a>
+            <a href="#about" class="text-amber-200 hover:text-white transition">About Us</a>
+            <a href="#contact" class="text-amber-200 hover:text-white transition">Contact</a>
+            <button id="cart-icon" class="relative text-amber-100 hover:text-white transition focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span id="cart-counter" class="absolute -top-2 -right-2 bg-orange-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+            </button>
+        </div>
+        <div class="md:hidden flex items-center gap-4">
+            <button id="cart-icon-mobile" class="relative text-amber-100 focus:outline-none">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+               <span id="cart-counter-mobile" class="absolute -top-2 -right-2 bg-orange-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+            </button>
+            <button id="menu-button" class="text-amber-100 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden px-6 pb-3 space-y-1">
+        <a href="#" class="block text-amber-200 hover:text-white transition py-2">Home</a>
+        <a href="#products" class="block text-amber-200 hover:text-white transition py-2">New Arrivals</a>
+        <a href="#about" class="block text-amber-200 hover:text-white transition py-2">About Us</a>
+        <a href="#contact" class="block text-amber-200 hover:text-white transition py-2">Contact</a>
+    </div>
+  </nav>
+
+  <header class="bg-teal-800 text-amber-100 p-8 text-center shadow-lg mb-10 relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <h1 class="font-display text-5xl md:text-6xl drop-shadow-md">कलाकृति बाज़ार</h1>
+    <p class="mt-2 text-lg italic text-amber-200">Where Tradition Meets Treasure</p>
+  </header>
+
+  <main id="products" class="container mx-auto px-6">
+  
+    <section id="about" class="mb-12 bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center gap-8 border-t-4 border-orange-500">
+        <img src="image.png" alt="Artisan Meera at work" class="w-40 h-40 rounded-full object-cover border-4 border-amber-300">
+        <div>
+            <h2 class="font-display text-3xl text-teal-900">About Us: Artisan of the Month</h2>
+            <p class="mt-2 text-gray-600">"Every piece of clay I shape holds a story of my ancestors. I pour my heart into creating pottery that brings the warmth of my village, Rajasthan, into your home. It is more than art; it is a legacy."</p>
+        </div>
+    </section>
+
+    <div class="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center">
+      <select id="categoryFilter" class="p-3 border-2 border-amber-700 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-orange-500 transition w-full md:w-auto">
+        <option value="all">All Categories</option>
+        <option value="Decor">Decor</option>
+        <option value="Paintings">Paintings</option>
+        <option value="Woodcraft">Woodcraft</option>
+        <option value="Metalcraft">Metalcraft</option>
+        <option value="Gifts">Gifts</option>
+      </select>
+      <select id="sortFilter" class="p-3 border-2 border-amber-700 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-orange-500 transition w-full md:w-auto">
+        <option value="default">Sort By</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+      <input type="text" id="searchBox" placeholder="Search for handmade treasures..." class="p-3 border-2 border-amber-700 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-orange-500 transition w-full md:w-1/3">
+    </div>
+
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    </div>
+  </main>
+
+  <footer id="contact" class="mt-20 bg-teal-900 text-amber-100 text-center p-6">
+    <p class="font-display text-2xl">Kalakriti Bazaar</p>
+    <p class="text-amber-200">Celebrating the hands that create magic.</p>
+  </footer>
+  
+  <div id="chat-icon" class="fixed bottom-6 right-6 bg-orange-600 p-4 rounded-full shadow-lg cursor-pointer hover:bg-orange-700 transition transform hover:scale-110 z-50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.08-3.242A8.905 8.905 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.72 14.48A7 7 0 0010 16c3.309 0 6-2.691 6-6s-2.691-6-6-6-6 2.691-6 6c0 1.25.38 2.4 1.026 3.42l-1.1 3.287 3.794-1.227z" clip-rule="evenodd" />
+    </svg>
+  </div>
+  
+  <div id="chat-window" class="fixed bottom-24 right-6 w-80 h-[28rem] bg-white rounded-xl shadow-2xl flex flex-col hidden opacity-0 translate-y-4 z-50 chat-window">
+    <div class="bg-teal-800 text-white p-4 rounded-t-xl flex justify-between items-center flex-shrink-0">
+      <h3 class="font-bold">AI Assistant</h3>
+      <button id="close-chat" class="text-white text-2xl leading-none">&times;</button>
+    </div>
+    <div id="chat-messages" class="p-4 flex-grow overflow-y-auto space-y-4">
+      <div class="flex">
+        <div class="bg-gray-200 p-3 rounded-lg max-w-xs">
+          <p>Hello! Welcome to Kalakriti Bazaar. How can I help you find the perfect piece of art today?</p>
+        </div>
+      </div>
+    </div>
+    <div class="p-2 border-t flex-shrink-0">
+      <input type="text" id="chat-input" placeholder="Type a message..." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+    </div>
+  </div>
+
+  <div id="cart-sidebar" class="cart-sidebar fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col z-50 transform translate-x-full">
+    <div class="bg-teal-800 text-white p-4 flex justify-between items-center flex-shrink-0">
+      <h2 class="text-2xl font-display">Your Cart</h2>
+      <button id="close-cart" class="text-3xl">&times;</button>
+    </div>
+    <div id="cart-items" class="p-4 flex-grow overflow-y-auto">
+    </div>
+    <div id="cart-footer" class="p-4 border-t flex-shrink-0">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-xl font-bold">Total:</span>
+            <span id="cart-total" class="text-xl font-bold text-teal-800">$0</span>
+        </div>
+        <button class="w-full bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 transition text-lg font-bold">Proceed to Checkout</button>
+    </div>
+  </div>
+
+
+  <script>
+    const products = [
+      { id: 1, name: "Laya Warli Art Tray", category: "Decor", price: "$45", image: "https://www.indihands.com/wp-content/uploads/2018/04/Laya-The-Warli-Tray-Red-1.jpg" },
+      { id: 2, name: "Nartaka Jali Peacock", category: "Woodcraft", price: "$85", image: "https://www.indihands.com/wp-content/uploads/2018/04/NARTAKA-WOODEN-JALI-PEACOCK-Group.jpg" },
+      { id: 3, name: "Hand-Painted Kettle", category: "Decor", price: "$55", image: "https://www.indihands.com/wp-content/uploads/2018/04/3-6.jpg" },
+      { id: 4, name: "Gond Tree of Life", category: "Paintings", price: "$120", image: "https://www.indihands.com/wp-content/uploads/2018/04/KSITIJA-GOND-TREE-OF-LIFE-3.jpg" },
+      { id: 5, name: "Pakshi Small Silk Folder", category: "Gifts", price: "$25", image: "https://www.indihands.com/wp-content/uploads/2018/04/Pakshi_Small-Silk-Folder-1.jpg" },
+      { id: 6, name: "Handmade Gift Box", category: "Gifts", price: "$40", image: "https://www.indihands.com/wp-content/uploads/2018/04/0B0A3500.jpg" },
+      { id: 7, name: "Maharaja Marble Plate", category: "Decor", price: "$95", image: "https://www.indihands.com/wp-content/uploads/2018/05/MAHARAJA-MARBLE-PLATE-1.jpg" },
+      { id: 8, name: "Painted T-light Holder", category: "Decor", price: "$35", image: "https://www.indihands.com/wp-content/uploads/2018/06/5.jpg" },
+      { id: 9, name: "Mahamani Gemstone Elephant", category: "Decor", price: "$150", image: "https://www.indihands.com/wp-content/uploads/2021/06/MAHAMANI-ELEPHANT-WITH-PRECIOUS-STONES-.JPG-4.jpg" },
+      { id: 10, name: "Ashwa Dokra Jali Horse", category: "Metalcraft", price: "$110", image: "https://www.indihands.com/wp-content/uploads/2021/07/ASHWA-TRIBAL-DOKRA-JALI-HORSE-2.jpg" }
+    ];
+
+    const grid = document.getElementById("productGrid");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const searchBox = document.getElementById("searchBox");
+    
+    let cart = [];
+
+    function renderProducts() {
+      const category = categoryFilter.value;
+      const sort = sortFilter.value;
+      const search = searchBox.value.toLowerCase();
+      
+      let filteredProducts = products
+        .filter(p => (category === "all" || p.category === category))
+        .filter(p => p.name.toLowerCase().includes(search));
+
+      if (sort === 'price-asc') {
+        filteredProducts.sort((a, b) => parseInt(a.price.slice(1)) - parseInt(b.price.slice(1)));
+      } else if (sort === 'price-desc') {
+        filteredProducts.sort((a, b) => parseInt(b.price.slice(1)) - parseInt(a.price.slice(1)));
+      }
+
+      grid.innerHTML = "";
+      if (filteredProducts.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-center text-gray-500 text-lg">No treasures found matching your search.</p>`;
+        return;
+      }
+      
+      filteredProducts.forEach((p, index) => {
+          const card = document.createElement("div");
+          card.className = "card-enter card bg-white p-4 rounded-lg shadow-md border border-amber-200 overflow-hidden flex flex-col";
+          card.style.animationDelay = `${index * 50}ms`;
+          
+          card.innerHTML = `
+            <div class="h-48 -m-4 overflow-hidden">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110">
+            </div>
+            <div class="flex flex-col flex-grow mt-6">
+              <h2 class="text-xl font-display flex-grow">${p.name}</h2>
+              <p class="text-sm text-gray-500">${p.category}</p>
+              <div class="flex justify-between items-center mt-4">
+                <p class="text-teal-800 font-bold text-lg">${p.price}</p>
+                <button data-id="${p.id}" class="add-to-cart-btn bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Add to Cart</button>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+    }
+    
+    function updateCartCounter() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const counter = document.getElementById('cart-counter');
+        const counterMobile = document.getElementById('cart-counter-mobile');
+        if (totalItems > 0) {
+            counter.textContent = totalItems;
+            counterMobile.textContent = totalItems;
+            counter.classList.remove('hidden');
+            counterMobile.classList.remove('hidden');
+        } else {
+            counter.classList.add('hidden');
+            counterMobile.classList.add('hidden');
+        }
+    }
+
+    function renderCart() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalEl = document.getElementById('cart-total');
+        cartItemsContainer.innerHTML = '';
+        
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="text-center text-gray-500">Your cart is empty.</p>';
+            cartTotalEl.textContent = '$0';
+            return;
+        }
+
+        let total = 0;
+        cart.forEach(item => {
+            const product = products.find(p => p.id === item.id);
+            const itemPrice = parseInt(product.price.slice(1));
+            total += itemPrice * item.quantity;
+
+            const cartItemEl = document.createElement('div');
+            cartItemEl.className = 'flex items-center justify-between gap-4 py-3 border-b';
+            cartItemEl.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="w-20 h-20 object-cover rounded-md">
+                <div class="flex-grow">
+                    <p class="font-bold">${product.name}</p>
+                    <p class="text-gray-600">${product.price}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button data-id="${item.id}" class="quantity-change-btn bg-gray-200 rounded-md p-1 w-6 h-6 flex items-center justify-center">-</button>
+                    <span>${item.quantity}</span>
+                    <button data-id="${item.id}" class="quantity-change-btn bg-gray-200 rounded-md p-1 w-6 h-6 flex items-center justify-center">+</button>
+                </div>
+                <button data-id="${item.id}" class="remove-item-btn text-red-500 hover:text-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+            `;
+            cartItemsContainer.appendChild(cartItemEl);
+        });
+        cartTotalEl.textContent = `$${total}`;
+    }
+
+    grid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('add-to-cart-btn')) {
+            const productId = parseInt(e.target.dataset.id);
+            const cartItem = cart.find(item => item.id === productId);
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({ id: productId, quantity: 1 });
+            }
+            updateCartCounter();
+            renderCart();
+        }
+    });
+
+    document.getElementById('cart-items').addEventListener('click', (e) => {
+        const target = e.target.closest('button');
+        if (!target) return;
+        
+        const productId = parseInt(target.dataset.id);
+
+        if (target.classList.contains('quantity-change-btn')) {
+            const cartItem = cart.find(item => item.id === productId);
+            if (target.textContent === '+') {
+                cartItem.quantity++;
+            } else if (target.textContent === '-' && cartItem.quantity > 1) {
+                cartItem.quantity--;
+            } else {
+                 cart = cart.filter(item => item.id !== productId);
+            }
+        }
+
+        if (target.classList.contains('remove-item-btn')) {
+            cart = cart.filter(item => item.id !== productId);
+        }
+
+        updateCartCounter();
+        renderCart();
+    });
+
+    categoryFilter.addEventListener("change", renderProducts);
+    sortFilter.addEventListener("change", renderProducts);
+    searchBox.addEventListener("input", renderProducts);
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProducts();
+        renderCart();
+    });
+
+
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    
+    const chatIcon = document.getElementById('chat-icon');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+ 
+    chatIcon.addEventListener('click', () => {
+        chatWindow.classList.remove('hidden');
+        setTimeout(() => {
+            chatWindow.classList.remove('opacity-0', 'translate-y-4');
+        }, 10);
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatWindow.classList.add('opacity-0', 'translate-y-4');
+        setTimeout(() => {
+            chatWindow.classList.add('hidden');
+        }, 300);
+    });
+
+    chatInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && chatInput.value.trim() !== '') {
+            const userMessage = chatInput.value.trim();
+            appendUserMessage(userMessage);
+            chatInput.value = '';
+            
+            setTimeout(appendBotMessage, 1000);
+        }
+    });
+
+    function appendUserMessage(message) {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = 'flex justify-end';
+        messageWrapper.innerHTML = `
+            <div class="bg-blue-500 text-white p-3 rounded-lg max-w-xs">
+                <p>${message}</p>
+            </div>
+        `;
+        chatMessages.appendChild(messageWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function appendBotMessage() {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = 'flex';
+        messageWrapper.innerHTML = `
+            <div class="bg-gray-200 p-3 rounded-lg max-w-xs">
+                <p>Thank you for your message! This is a demo chat. A real assistant will be available soon to help you.</p>
+            </div>
+        `;
+        chatMessages.appendChild(messageWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    const cartIcon = document.getElementById('cart-icon');
+    const cartIconMobile = document.getElementById('cart-icon-mobile');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const closeCartBtn = document.getElementById('close-cart');
+
+    function openCart() {
+        cartSidebar.classList.remove('translate-x-full');
+    }
+
+    function closeCart() {
+        cartSidebar.classList.add('translate-x-full');
+    }
+
+    cartIcon.addEventListener('click', openCart);
+    cartIconMobile.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+
+  </script>
+</body>
+</html>
